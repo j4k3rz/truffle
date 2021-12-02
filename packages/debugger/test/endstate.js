@@ -45,7 +45,12 @@ describe("End State", function () {
   var compilations;
 
   before("Create Provider", async function () {
-    provider = Ganache.provider({ seed: "debugger", gasLimit: 7000000 });
+    provider = Ganache.provider({
+      vmErrorsOnRPCResponse: true, 
+      legacyInstamine: true,
+      seed: "debugger",
+      gasLimit: 7000000
+    });
   });
 
   before("Prepare contracts and artifacts", async function () {
@@ -86,7 +91,7 @@ describe("End State", function () {
       provider,
       compilations
     });
-    
+
     await bugger.runToEnd();
 
     assert.ok(bugger.view(evm.transaction.status));
